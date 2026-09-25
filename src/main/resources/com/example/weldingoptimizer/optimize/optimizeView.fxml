@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!--
+  Validation: inline red Labels (visible=false by default), not per-field suggest scenes.
+  Deliberate adaptation of the Expert System pattern for multi-field screens.
+-->
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.weldingoptimizer.optimize.optimizeController">
+   <children>
+      <Label layoutX="130.0" layoutY="30.0" text="Find Optimal Parameters">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+
+      <Label layoutX="80.0" layoutY="110.0" text="Target Penetration" />
+      <TextField fx:id="targetField" layoutX="250.0" layoutY="106.0" prefWidth="140.0" promptText="mm" />
+      <Label layoutX="400.0" layoutY="110.0" text="mm">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="targetError" layoutX="250.0" layoutY="132.0" text="Enter a positive target penetration" textFill="#d40e0e" visible="false" />
+
+      <Label layoutX="80.0" layoutY="170.0" text="Tolerance" />
+      <TextField fx:id="toleranceField" layoutX="250.0" layoutY="166.0" prefWidth="140.0" promptText="percent" text="5" />
+      <Label layoutX="400.0" layoutY="170.0" text="\%">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="250.0" layoutY="192.0" text="used by grid search; analytic solve is exact" textFill="#666666">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <Label fx:id="toleranceError" layoutX="430.0" layoutY="170.0" text="Enter 0–100" textFill="#d40e0e" visible="false" />
+
+      <Label layoutX="80.0" layoutY="230.0" text="Max Results" />
+      <TextField fx:id="maxResultsField" layoutX="250.0" layoutY="226.0" prefWidth="140.0" promptText="10" text="10" />
+      <Label layoutX="250.0" layoutY="252.0" text="default 10, max 50" textFill="#666666">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <Label fx:id="maxResultsError" layoutX="400.0" layoutY="230.0" text="Enter 1–50" textFill="#d40e0e" visible="false" />
+
+      <Button layoutX="175.0" layoutY="320.0" mnemonicParsing="false" onAction="#findParameters" style="-fx-background-color: #0468BF; -fx-text-fill: white; -fx-background-radius: 6px; -fx-min-width: 120;" text="Find Parameters">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="320.0" layoutY="320.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #0468BF; -fx-text-fill: white; -fx-background-radius: 6px; -fx-min-width: 60;" text="Back">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

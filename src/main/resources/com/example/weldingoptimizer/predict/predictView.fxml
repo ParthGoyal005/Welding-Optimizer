@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!--
+  Validation: inline red Labels (visible=false by default), not per-field suggest scenes.
+  Deliberate adaptation of the Expert System pattern — five fields on one screen
+  make the old one-field-per-screen suggest-view approach a poor fit.
+-->
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.weldingoptimizer.predict.predictController">
+   <children>
+      <Label layoutX="155.0" layoutY="8.0" text="Predict Penetration">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+
+      <Label layoutX="40.0" layoutY="52.0" text="Wire Feed Rate" />
+      <TextField fx:id="wireFeedField" layoutX="160.0" layoutY="48.0" prefWidth="140.0" promptText="W" />
+      <Label layoutX="308.0" layoutY="52.0" text="mm/min">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="160.0" layoutY="72.0" text="6350 to 10160 mm/min" textFill="#666666">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <Label fx:id="wireFeedError" layoutX="360.0" layoutY="52.0" text="Invalid wire feed rate" textFill="#d40e0e" visible="false" />
+
+      <Label layoutX="40.0" layoutY="100.0" text="Arc Voltage" />
+      <TextField fx:id="voltageField" layoutX="160.0" layoutY="96.0" prefWidth="140.0" promptText="V" />
+      <Label layoutX="308.0" layoutY="100.0" text="Volts">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="160.0" layoutY="120.0" text="16 to 25 Volts" textFill="#666666">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <Label fx:id="voltageError" layoutX="360.0" layoutY="100.0" text="Invalid arc voltage" textFill="#d40e0e" visible="false" />
+
+      <Label layoutX="40.0" layoutY="148.0" text="Nozzle Distance" />
+      <TextField fx:id="nozzleField" layoutX="160.0" layoutY="144.0" prefWidth="140.0" promptText="N" />
+      <Label layoutX="308.0" layoutY="148.0" text="mm">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="160.0" layoutY="168.0" text="12 to 18 mm" textFill="#666666">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <Label fx:id="nozzleError" layoutX="360.0" layoutY="148.0" text="Invalid nozzle distance" textFill="#d40e0e" visible="false" />
+
+      <Label layoutX="40.0" layoutY="196.0" text="Welding Speed" />
+      <TextField fx:id="speedField" layoutX="160.0" layoutY="192.0" prefWidth="140.0" promptText="S" />
+      <Label layoutX="308.0" layoutY="196.0" text="mm/min">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="160.0" layoutY="216.0" text="406 to 610 mm/min" textFill="#666666">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <Label fx:id="speedError" layoutX="360.0" layoutY="196.0" text="Invalid welding speed" textFill="#d40e0e" visible="false" />
+
+      <Label layoutX="40.0" layoutY="244.0" text="Gas Flow Rate" />
+      <TextField fx:id="gasField" layoutX="160.0" layoutY="240.0" prefWidth="140.0" promptText="G" />
+      <Label layoutX="308.0" layoutY="244.0" text="(unit TBD)">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="160.0" layoutY="264.0" text="range pending" textFill="#666666">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <Label fx:id="gasError" layoutX="360.0" layoutY="244.0" text="Invalid gas flow rate" textFill="#d40e0e" visible="false" />
+
+      <Label fx:id="resultLabel" layoutX="40.0" layoutY="295.0" prefWidth="520.0" text="" />
+
+      <Button layoutX="200.0" layoutY="340.0" mnemonicParsing="false" onAction="#predict" style="-fx-background-color: #0468BF; -fx-text-fill: white; -fx-background-radius: 6px; -fx-min-width: 90;" text="Predict">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="310.0" layoutY="340.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #0468BF; -fx-text-fill: white; -fx-background-radius: 6px; -fx-min-width: 60;" text="Back">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
