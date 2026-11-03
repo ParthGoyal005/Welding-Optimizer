@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.weldingoptimizer.landing.landingController">
+   <children>
+      <Label layoutX="95.0" layoutY="90.0" text="Weld Penetration Optimizer">
+         <font>
+            <Font name="Bodoni MT" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="185.0" layoutY="145.0" text="Al 5083 GMAW">
+         <font>
+            <Font name="Bodoni MT" size="32.0" />
+         </font>
+      </Label>
+      <Button layoutX="195.0" layoutY="230.0" mnemonicParsing="false" onAction="#openPredict" style="-fx-background-color: #0468BF; -fx-text-fill: white; -fx-background-radius: 6px; -fx-min-height: 32; -fx-min-width: 200;" text="Predict Penetration">
+         <font>
+            <Font size="15.5" />
+         </font>
+      </Button>
+      <Button layoutX="180.0" layoutY="285.0" mnemonicParsing="false" onAction="#openOptimize" style="-fx-background-color: #0468BF; -fx-text-fill: white; -fx-background-radius: 6px; -fx-min-height: 32; -fx-min-width: 230;" text="Find Optimal Parameters">
+         <font>
+            <Font size="15.5" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
