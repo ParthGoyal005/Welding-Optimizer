@@ -90,7 +90,7 @@ public class predictController {
 
         Double g = parseAndValidate(gasField, gasError,
                 parameterRanges.G_MIN, parameterRanges.G_MAX,
-                "Enter a valid gas flow rate (range pending)");
+                "Enter a number between 7 and 26");
         if (g == null) {
             return;
         }

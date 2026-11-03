@@ -25,17 +25,19 @@ public final class parameterRanges {
     public static final double S_MIN = 406.0;
     public static final double S_MAX = 610.0;
 
-    // --- Shielding gas flow rate G ---
-    // TODO: replace placeholder range with the real operating limits when provided.
-    public static final double G_MIN = 15.0; // PLACEHOLDER — update when real G range is known
-    public static final double G_MAX = 25.0; // PLACEHOLDER — update when real G range is known
+    // --- Shielding gas flow rate G (L/min) ---
+    public static final double G_MIN = 7.0;
+    public static final double G_MAX = 26.0;
+
+    // --- Torch angle theta (degrees) for reinforcement height ---
+    public static final double DEFAULT_TORCH_ANGLE_DEG = 70.0;
 
     // --- Plate / reinforcement hard constraint ---
     public static final double PLATE_THICKNESS_MM = 12.0;
-    public static final double MAX_REINFORCEMENT_HEIGHT_RATIO = 0.30;
+    public static final double MAX_REINFORCEMENT_HEIGHT_RATIO = 0.50;
     /** h must be ≤ this value (mm). */
     public static final double MAX_REINFORCEMENT_HEIGHT_MM =
-            PLATE_THICKNESS_MM * MAX_REINFORCEMENT_HEIGHT_RATIO; // 3.6 mm
+            PLATE_THICKNESS_MM * MAX_REINFORCEMENT_HEIGHT_RATIO; // 6.0 mm
 
     // --- Grid step counts for search (modest for a small project) ---
     public static final int W_STEPS = 12;

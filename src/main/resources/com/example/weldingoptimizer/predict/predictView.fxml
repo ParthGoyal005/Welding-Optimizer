@@ -77,12 +77,12 @@
 
       <Label layoutX="40.0" layoutY="244.0" text="Gas Flow Rate" />
       <TextField fx:id="gasField" layoutX="160.0" layoutY="240.0" prefWidth="140.0" promptText="G" />
-      <Label layoutX="308.0" layoutY="244.0" text="(unit TBD)">
+      <Label layoutX="308.0" layoutY="244.0" text="L/min">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="160.0" layoutY="264.0" text="range pending" textFill="#666666">
+      <Label layoutX="160.0" layoutY="264.0" text="7 to 26 L/min" textFill="#666666">
          <font>
             <Font size="11.0" />
          </font>

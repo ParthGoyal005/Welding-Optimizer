@@ -69,7 +69,7 @@ public final class weldingOptimizer {
     }
 
     /**
-     * Step 1 only: combinations that satisfy the governing equation / tolerance,
+     * Step 1 only: combinations that satisfy the governing equation within tolerance,
      * before reinforcement-height filtering and heat-input ranking.
      */
     public List<weldingParameters> findMatchingCandidates(double targetPenetration,
@@ -78,15 +78,19 @@ public final class weldingOptimizer {
         if (strategy == searchStrategy.GRID_TOLERANCE) {
             return generateGridToleranceCandidates(targetPenetration, tolerancePercent);
         }
-        return generateAnalyticCandidates(targetPenetration);
+        return generateAnalyticCandidates(targetPenetration, tolerancePercent);
+    }
+
+    public List<weldingParameters> generateAnalyticCandidates(double target) {
+        return generateAnalyticCandidates(target, 0.0);
     }
 
     /**
-     * Analytic solve for N (only variable in both interaction terms):
-     * N = (target − 3.69 − 0.91*W + 0.14*V + 0.31*S + 0.06*G)
-     *     / (0.14 + 0.11*W − 0.14*V)
+     * Analytic solve for N across target ± tolerancePercent:
+     * N = (t − 0.576144 − 0.000188976*W − 0.124444*V + 0.00303922*S + 0.0133333*G)
+     *     / (0.100370 + 0.0000192476*W − 0.0103704*V)
      */
-    private List<weldingParameters> generateAnalyticCandidates(double target) {
+    public List<weldingParameters> generateAnalyticCandidates(double target, double tolerancePercent) {
         List<weldingParameters> out = new ArrayList<>();
 
         double[] wValues = linspace(parameterRanges.W_MIN, parameterRanges.W_MAX, parameterRanges.W_STEPS);
@@ -94,23 +98,30 @@ public final class weldingOptimizer {
         double[] sValues = linspace(parameterRanges.S_MIN, parameterRanges.S_MAX, parameterRanges.S_STEPS);
         double[] gValues = linspace(parameterRanges.G_MIN, parameterRanges.G_MAX, parameterRanges.G_STEPS);
 
-        for (double w : wValues) {
-            for (double v : vValues) {
-                for (double s : sValues) {
-                    for (double g : gValues) {
-                        double denominator = 0.14 + 0.11 * w - 0.14 * v;
-                        if (Math.abs(denominator) < parameterRanges.DENOMINATOR_EPSILON) {
-                            continue;
+        double lower = target * (1.0 - Math.max(0.0, tolerancePercent) / 100.0);
+        double upper = target * (1.0 + Math.max(0.0, tolerancePercent) / 100.0);
+        int slices = (tolerancePercent > 0.0) ? 9 : 1;
+        double[] targetValues = linspace(lower, upper, slices);
+
+        for (double t : targetValues) {
+            for (double w : wValues) {
+                for (double v : vValues) {
+                    for (double s : sValues) {
+                        for (double g : gValues) {
+                            double denominator = 0.100370 + 0.0000192476 * w - 0.0103704 * v;
+                            if (Math.abs(denominator) < parameterRanges.DENOMINATOR_EPSILON) {
+                                continue;
+                            }
+
+                            double numerator = t - 0.576144 - 0.000188976 * w - 0.124444 * v + 0.00303922 * s + 0.0133333 * g;
+                            double n = numerator / denominator;
+
+                            if (n < parameterRanges.N_MIN || n > parameterRanges.N_MAX) {
+                                continue;
+                            }
+
+                            out.add(new weldingParameters(w, v, n, s, g));
                         }
-
-                        double numerator = target - 3.69 - 0.91 * w + 0.14 * v + 0.31 * s + 0.06 * g;
-                        double n = numerator / denominator;
-
-                        if (n < parameterRanges.N_MIN || n > parameterRanges.N_MAX) {
-                            continue;
-                        }
-
-                        out.add(new weldingParameters(w, v, n, s, g));
                     }
                 }
             }
@@ -118,8 +129,8 @@ public final class weldingOptimizer {
         return out;
     }
 
-    private List<weldingParameters> generateGridToleranceCandidates(double target,
-                                                                    double tolerancePercent) {
+    public List<weldingParameters> generateGridToleranceCandidates(double target,
+                                                                   double tolerancePercent) {
         List<weldingParameters> out = new ArrayList<>();
         double lower = target * (1.0 - tolerancePercent / 100.0);
         double upper = target * (1.0 + tolerancePercent / 100.0);
@@ -156,12 +167,11 @@ public final class weldingOptimizer {
 
     /** Inclusive linspace with {@code steps} points (at least 2). */
     static double[] linspace(double min, double max, int steps) {
-        int n = Math.max(2, steps);
-        double[] values = new double[n];
+        int n = Math.max(1, steps);
         if (n == 1) {
-            values[0] = min;
-            return values;
+            return new double[]{min};
         }
+        double[] values = new double[n];
         double step = (max - min) / (n - 1);
         for (int i = 0; i < n; i++) {
             values[i] = min + step * i;
